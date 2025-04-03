@@ -23,10 +23,25 @@ const Enquiry = () => {
 
           //update logic
 
+          axios.put(`http://localhost:8020/api/website/enquiry/update/${formData._id}`, formData)
+          .then((res)=>{
+            toast.success('Enquiry Updated Successfully')
+            setFormData({
+              name:'',
+              email:'',
+              phone:'',
+              message:''
+            })
+            getAllenquiry()
+          })
+
+
+
+
         }else{
 
           //save logic 
-          
+
           axios.post('http://localhost:8020/api/website/enquiry/insert', formData).then((res) => {
             console.log(res.data);
             toast.success('Enquiry saved successfully');
