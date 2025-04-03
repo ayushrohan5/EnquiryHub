@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios';
 import { Button, Checkbox, Label, Textarea, TextInput } from "flowbite-react";
 
 import EnquiryList from './EnquiryList';
@@ -7,9 +8,16 @@ const Enquiry = () => {
 
 
     let saveEnquiry=(e)=>{
-        alert("Enquiry Saved")
         e.preventDefault();
-
+        let formData = {
+          name: e.target.name.value,
+          email: e.target.email.value,
+          phone: e.target.phone.value,
+          message: e.target.message.value
+        }
+           axios.post('http://localhost:8020/api/website/enquiry/insert', formData).then((res) => {
+             console.log(res.data)
+           });
     }
 
   return (
