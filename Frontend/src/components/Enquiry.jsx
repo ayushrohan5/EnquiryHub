@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react'
 import axios from 'axios';
 import { Button, Checkbox, Label, Textarea, TextInput } from "flowbite-react";
 import {ToastContainer, toast} from 'react-toastify';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import EnquiryList from './EnquiryList';
 
@@ -11,22 +12,33 @@ const Enquiry = () => {
       name: "",
       email: "",
       phone: "",
-      message: ""
+      message: "",
+      _id:''
      });
 
     let saveEnquiry=(e)=>{
         e.preventDefault();
-        // let formData = {
-        //   name: e.target.name.value,
-        //   email: e.target.email.value,
-        //   phone: e.target.phone.value,
-        //   message: e.target.message.value
-        // }
-           axios.post('http://localhost:8020/api/website/enquiry/insert', formData).then((res) => {
-             console.log(res.data);
-             toast.success('Enquiry saved successfully');
-             setFormData({name: "", email: "", phone: "", message: ""});
-           });
+
+        if(formData._id){
+
+          //update logic
+
+        }else{
+
+          //save logic 
+          
+          axios.post('http://localhost:8020/api/website/enquiry/insert', formData).then((res) => {
+            console.log(res.data);
+            toast.success('Enquiry saved successfully');
+            setFormData({name: "", email: "", phone: "", message: ""});
+            getAllenquiry();
+          });
+
+        }
+
+
+
+          
     }
 
 
@@ -89,13 +101,17 @@ const Enquiry = () => {
             </div>
 
             <div className="py-3">
-            <Button type="submit" className="w-[100%]">Save</Button>
+            <Button type="submit" className="w-[100%]">
+              {
+                formData._id ? 'Update' : 'Save'
+              }
+            </Button>
                 </div>
 
             </form>
         </div>
 
-<EnquiryList data={enquiryList} />
+<EnquiryList data={enquiryList} getAllenquiry={getAllenquiry} Swal={Swal} setFormData={setFormData} />
          
 
 

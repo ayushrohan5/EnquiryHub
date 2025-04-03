@@ -23,10 +23,21 @@ let enquiryList = async(req, res) => {
     
 }
 
-let deleteEnquiry = async(req, res)=>{
-    enquiryId = req.params.id;
-    let deleteEnquiry = await enquiryModel.deleteOne({_id:enquiryId});
-    res.send({status:1, msg:"enquiry deleted succcessfully", deleteData:deleteEnquiry});
+let enquiryDelete = async(req, res)=>{
+   let enId = req.params.id;
+    let enquiry = await enquiryModel.deleteOne({_id:enId});
+    res.send({status:1, msg:"enquiry deleted succcessfully", enquiry});
 }
 
-module.exports = {enquiryInsert,enquiryList, deleteEnquiry}
+let enquirysingleRow =  async(req, res) => {
+    let enId = req.params.id;
+   
+
+    let enquiry = await enquiryModel.findOne({_id:enId});
+
+     res.send({status: 'ok', enquiry});
+}
+
+
+
+module.exports = {enquiryInsert,enquiryList, enquiryDelete, enquirysingleRow}
